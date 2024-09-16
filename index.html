@@ -1,14 +1,40 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Diagrama de Tarta</title>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Processing and Chart</title>
+    <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
-    <script src="js/index.js"></script>
-    <link rel="stylesheet" href="css/style.css">
+  </head>
 
-</head>
-<body>
-    <canvas id="myChart"></canvas>
-</body>
+  <body>
+    <h1>Data Processing and Chart</h1>
+    <div class="form-container">
+      <form id="data-form">
+        <div class="row">
+          <label for="date-range">Date Range:</label><br>
+          <input type="date" id="startDate" name="startDate" value="2024-09-16">
+          <input type="date" id="endDate" name="endDate" value="2024-09-17">
+        </div>
+        <div class="row">
+          <label for="time-range">Time Range:</label><br>
+          <input type="time" id="startTime" name="startTime" min="0" max="23" value="08:00" placeholder="Start hour (0-23)">
+          <input type="time" id="endTime" name="endTime" min="0" max="23" value="17:00" placeholder="End hour (0-23)">
+        </div>
+        <div class="row">
+          <label for="includeWeekends">Include Weekends:</label><br>
+          <input type="checkbox" id="includeWeekends" name="includeWeekends">
+        </div>
+        <button type="submit">Process Data and Create Chart</button>
+      </form>
+    </div>
+    <br>
+    <br>
+    <canvas id="myChart" class="canvas"></canvas>
+    <script src="script.js"></script>
+  </body>
+
 </html>
