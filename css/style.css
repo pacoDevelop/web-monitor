@@ -1,4 +1,75 @@
-canvas {
-    width: 400px;
-    height: 400px;
+body {
+  font-family: sans-serif;
+  margin: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+.canvas{
+  height: 536px;
+  width: 536px;
+}
+h1 {
+  text-align: center;
+  color: #3399ff;
+}
+
+.form-container {
+  border: 1px solid #ddd;
+  padding: 3rem;
+  border-radius: 5px;
+  background-color: #f0f9ff;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+
+}
+
+label {
+  display: block;
+  margin: 5px;
+  font-weight: bold;
+  color: #333;
+  width: -webkit-fill-available;
+}
+
+textarea,
+input[type="text"],
+input[type="number"],
+input[type="time"],
+input[type="date"] {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-left: 1.5rem;
+}
+
+input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+button {
+  background-color: #3399ff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px
+}
+
+button:hover {
+  background-color: #2eafff;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding: 5px;
+    text-align-last: right;
+    align-items: center;
+    }
