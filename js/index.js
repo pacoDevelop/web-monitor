@@ -1,3 +1,5 @@
+let myChart; // Variable para almacenar la instancia del gráfico
+
 function processData(data, startDate, endDate, startTime, endTime, includeWeekends) {
   // Función para determinar si una fecha está dentro del rango horario
   function isWithinHours(date, startTime, endTime) {
@@ -19,8 +21,9 @@ function processData(data, startDate, endDate, startTime, endTime, includeWeeken
     return startTimeRecord >= startDate && endTimeRecord <= endDate &&
       isWithinHours(startTimeRecord, startTime, endTime) &&
       isWithinHours(endTimeRecord, startTime, endTime) &&
-      (!includeWeekends || !isWeekend(startTimeRecord));
+      (includeWeekends || !isWeekend(startTimeRecord));
   });
+  console.log(filteredData)
   // Calcular el tiempo total para cada entorno y estado
   const environmentStats = {};
 
@@ -40,7 +43,7 @@ function processData(data, startDate, endDate, startTime, endTime, includeWeeken
             WARN: 0
           };
         }
-        environmentStats[environment][rec[record[i]]] += (duration+60000) / 1000 / 3600;
+        environmentStats[environment][rec[record[i]]] += (duration + 60000) / 1000 / 3600;
       }
     }
   });
@@ -57,10 +60,13 @@ function processData(data, startDate, endDate, startTime, endTime, includeWeeken
       backgroundColor: ['green', 'red', 'yellow']
     });
   }
-
+  if (myChart) {
+    myChart.destroy();
+  }
   // Crear el diagrama de tarta usando Chart.js
   const ctx = document.getElementById('myChart').getContext('2d');
-  new Chart(ctx, {
+
+ myChart= new Chart(ctx, {
     type: 'pie',
     data: chartData,
     options: {
@@ -69,11 +75,11 @@ function processData(data, startDate, endDate, startTime, endTime, includeWeeken
           callbacks: {
             label: function(context) {
               let dataset = context.dataset || '';
-              context.formattedValue=context.formattedValue;
-              context.formattedValue+=" horas"
+              context.formattedValue = context.formattedValue;
+              context.formattedValue += " horas"
               const label = dataset.label;
               //const value = dataset.data[context.tooltipItem.index].toFixed(2);   
-                            // Limit to 2 decimal places
+              // Limit to 2 decimal places
               return label + ': ' + context.formattedValue;
             }
           }
@@ -84,13 +90,38 @@ function processData(data, startDate, endDate, startTime, endTime, includeWeeken
 }
 
 const _init = async () => {
+  // Obtener los valores de los campos del formulario
+  const startDateString = document.getElementById('startDate').value;
+  const endDateString = document.getElementById('endDate').value;
+  const startTime = parseInt(document.getElementById('startTime').value);
+  const endTime = parseInt(document.getElementById('endTime').value);
+  const includeWeekends = document.getElementById('includeWeekends').checked;
+  console.log(includeWeekends)
+  // Validar los datos
+  if (!startDateString || !endDateString || isNaN(startTime) || isNaN(endTime)) {
+    alert('Por favor, completa todos los campos con datos válidos.');
+    return;
+  }
+
+  const startDate = new Date(startDateString);
+  const endDate = new Date(endDateString);
+
+  if (startDate > endDate) {
+    alert('La fecha de inicio debe ser anterior a la fecha de fin.');
+    return;
+  }
+
+  if (startTime < 0 || startTime > 23 || endTime < 0 || endTime > 23) {
+    alert('Las horas deben estar entre 0 y 23.');
+    return;
+  }
   // Ejemplo de uso
   const data = await fetchDataAndCreateChart();
-  const startDate = new Date('2024-09-16');
+  /* const startDate = new Date('2024-09-16');
   const endDate = new Date('2024-09-17');
   const startTime = 8; // 8:00 AM
   const endTime = 14; // 5:00 PM
-  const includeWeekends = false; // Por defecto, no incluir fines de semana
+  c onst includeWeekends = false; // Por defecto, no incluir fines de semana*/
   processData(data, startDate, endDate, startTime, endTime, includeWeekends);
 }
 async function fetchDataAndCreateChart() {
@@ -112,5 +143,11 @@ function parseCSV(csvData) {
   }).data;
 }
 
-// Llamar a la función para iniciar el proceso
-_init();
+
+const form = document.getElementById('data-form');
+
+form.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  // Llamar a la función para iniciar el proceso
+  _init();
+});
