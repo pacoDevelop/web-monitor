@@ -70,6 +70,9 @@ function processData(data, startDate, endDate, startTime, endTime, includeWeeken
     type: 'pie',
     data: chartData,
     options: {
+      responsive: true,
+      maintainAspectRatio: true, // Para que se adapte al contenedor
+      aspectRatio: 2, // Ajusta la relación de aspecto
       plugins: {
         tooltip: {
           callbacks: {
