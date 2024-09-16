@@ -154,3 +154,15 @@ form.addEventListener('submit', async (event) => {
   // Llamar a la función para iniciar el proceso
   _init();
 });
+
+const startDateStringElement = document.getElementById('startDate');
+const endDateStringElement = document.getElementById('endDate');
+const startTimeElement = parseInt(document.getElementById('startTime'));
+const endTimeElement = parseInt(document.getElementById('endTime'));
+const includeWeekendsElement = document.getElementById('includeWeekends');
+// Escuchadores de eventos para detectar cambios en los elementos
+startDateStringElement.addEventListener('change', _init);
+endDateStringElement.addEventListener('change', _init);
+startTimeElement.addEventListener('input', _init);
+endTimeElement.addEventListener('input', _init);
+includeWeekendsElement.addEventListener('change', _init);
